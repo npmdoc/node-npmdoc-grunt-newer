@@ -1,0 +1,469 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/tschaub/grunt-newer"
+
+    >grunt-newer (v1.2.0)</a>
+</h1>
+<h4>Run Grunt tasks with only those source files modified since the last successful run.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-newer">module grunt-newer</a><ol>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">grunt-newer.</span>util</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-newer.util">module grunt-newer.util</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.anyNewer">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>anyNewer
+            <span class="apidocSignatureSpan">(paths, time, tolerance, override, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.filterFilesByHash">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterFilesByHash
+            <span class="apidocSignatureSpan">(files, taskName, targetName, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.filterFilesByTime">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterFilesByTime
+            <span class="apidocSignatureSpan">(files, previous, tolerance, override, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.filterPathsByHash">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterPathsByHash
+            <span class="apidocSignatureSpan">(paths, cacheDir, taskName, targetName, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.filterPathsByTime">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterPathsByTime
+            <span class="apidocSignatureSpan">(paths, time, tolerance, override, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.generateFileHash">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>generateFileHash
+            <span class="apidocSignatureSpan">(filePath, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.getExistingHash">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>getExistingHash
+            <span class="apidocSignatureSpan">(filePath, cacheDir, taskName, targetName, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.getHashPath">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>getHashPath
+            <span class="apidocSignatureSpan">(cacheDir, taskName, targetName, filePath)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.util.getStampPath">
+            function <span class="apidocSignatureSpan">grunt-newer.util.</span>getStampPath
+            <span class="apidocSignatureSpan">(cacheDir, taskName, targetName)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-newer" id="apidoc.module.grunt-newer">module grunt-newer</a></h1>
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-newer.util" id="apidoc.module.grunt-newer.util">module grunt-newer.util</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.anyNewer" id="apidoc.element.grunt-newer.util.anyNewer">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>anyNewer
+        <span class="apidocSignatureSpan">(paths, time, tolerance, override, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">anyNewer = function (paths, time, tolerance, override, callback) {
+  if (paths.length === 0) {
+    process.nextTick(function() {
+      callback(null, false);
+    });
+    return;
+  }
+  var complete = 0;
+  function iterate() {
+    fs.stat(paths[complete], function(err, stats) {
+      if (err) {
+        return callback(err);
+      }
+
+      var pathTime = stats.mtime.getTime();
+      var comparisonTime = time.getTime();
+      var difference = pathTime - comparisonTime;
+
+      if (difference &#x3e; tolerance) {
+        return callback(null, true);
+      } else {
+        override(paths[complete], time, function(include) {
+          if (include) {
+            callback(null, true);
+          } else {
+            ++complete;
+            if (complete &#x3e;= paths.length) {
+              return callback(null, false);
+            }
+            iterate();
+          }
+        });
+      }
+    });
+  }
+  iterate();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.filterFilesByHash" id="apidoc.element.grunt-newer.util.filterFilesByHash">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterFilesByHash
+        <span class="apidocSignatureSpan">(files, taskName, targetName, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">filterFilesByHash = function (files, taskName, targetName, callback) {
+  var modified = false;
+  async.map(files, function(obj, done) {
+
+    filterPathsByHash(obj.src, taskName, targetName, function(err, src) {
+      if (err) {
+        return done(err);
+      }
+      if (src.length) {
+        modified = true;
+      }
+      done(null, {src: src, dest: obj.dest});
+    });
+
+  }, function(err, newerFiles) {
+    callback(err, newerFiles, modified);
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.filterFilesByTime" id="apidoc.element.grunt-newer.util.filterFilesByTime">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterFilesByTime
+        <span class="apidocSignatureSpan">(files, previous, tolerance, override, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">filterFilesByTime = function (files, previous, tolerance, override, callback) {
+  async.map(files, function(obj, done) {
+    if (obj.dest &#x26;&#x26; !(obj.src.length === 1 &#x26;&#x26; obj.dest === obj.src[0])) {
+      fs.stat(obj.dest, function(err, stats) {
+        if (err) {
+          // dest file not yet created, use all src files
+          return done(null, obj);
+        }
+        return anyNewer(
+          obj.src, stats.mtime, tolerance, override, function(err, any) {
+          done(err, any &#x26;&#x26; obj);
+        });
+      });
+    } else {
+      filterPathsByTime(
+          obj.src, previous, tolerance, override, function(err, src) {
+        if (err) {
+          return done(err);
+        }
+        done(null, {src: src, dest: obj.dest});
+      });
+    }
+  }, function(err, results) {
+    if (err) {
+      return callback(err);
+    }
+    // get rid of file config objects with no src files
+    callback(null, results.filter(function(obj) {
+      return obj &#x26;&#x26; obj.src &#x26;&#x26; obj.src.length &#x3e; 0;
+    }));
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    path: filePath,
+    time: time
+  };
+  options.override(details, include);
+}
+
+var files = grunt.task.normalizeMultiTaskFiles(config, targetName);
+util.<span class="apidocCodeKeywordSpan">filterFilesByTime</span>(
+  files, previous, options.tolerance, override, function(e, newerFiles) {
+  if (e) {
+    return done(e);
+  } else if (newerFiles.length === 0) {
+    grunt.log.writeln(&#x27;No newer files to process.&#x27;);
+    return done();
+  }
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.filterPathsByHash" id="apidoc.element.grunt-newer.util.filterPathsByHash">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterPathsByHash
+        <span class="apidocSignatureSpan">(paths, cacheDir, taskName, targetName, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">filterPathsByHash = function (paths, cacheDir, taskName, targetName, callback) {
+  async.filter(paths, function(filePath, done) {
+    async.parallel({
+      previous: function(cb) {
+        getExistingHash(filePath, cacheDir, taskName, targetName, cb);
+      },
+      current: function(cb) {
+        generateFileHash(filePath, cb);
+      }
+    }, function(err, hashes) {
+      if (err) {
+        return callback(err);
+      }
+      done(String(hashes.previous) !== String(hashes.current));
+    });
+  }, callback);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.filterPathsByTime" id="apidoc.element.grunt-newer.util.filterPathsByTime">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>filterPathsByTime
+        <span class="apidocSignatureSpan">(paths, time, tolerance, override, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">filterPathsByTime = function (paths, time, tolerance, override, callback) {
+  async.map(paths, fs.stat, function(err, stats) {
+    if (err) {
+      return callback(err);
+    }
+
+    var olderPaths = [];
+    var newerPaths = paths.filter(function(filePath, index) {
+      var newer = stats[index].mtime - time &#x3e; tolerance;
+      if (!newer) {
+        olderPaths.push(filePath);
+      }
+      return newer;
+    });
+
+    async.filter(olderPaths, function(filePath, include) {
+      override(filePath, time, include);
+    }, function(overrides) {
+      callback(null, newerPaths.concat(overrides));
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.generateFileHash" id="apidoc.element.grunt-newer.util.generateFileHash">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>generateFileHash
+        <span class="apidocSignatureSpan">(filePath, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">generateFileHash = function (filePath, callback) {
+  var md5sum = crypto.createHash(&#x27;md5&#x27;);
+  var stream = new fs.ReadStream(filePath);
+  stream.on(&#x27;data&#x27;, function(chunk) {
+    md5sum.update(chunk);
+  });
+  stream.on(&#x27;error&#x27;, callback);
+  stream.on(&#x27;end&#x27;, function() {
+    callback(null, md5sum.digest(&#x27;hex&#x27;));
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.getExistingHash" id="apidoc.element.grunt-newer.util.getExistingHash">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>getExistingHash
+        <span class="apidocSignatureSpan">(filePath, cacheDir, taskName, targetName, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getExistingHash = function (filePath, cacheDir, taskName, targetName, callback) {
+  var hashPath = getHashPath(cacheDir, taskName, targetName, filePath);
+  fs.exists(hashPath, function(exists) {
+    if (!exists) {
+      return callback(null, null);
+    }
+    fs.readFile(hashPath, callback);
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.getHashPath" id="apidoc.element.grunt-newer.util.getHashPath">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>getHashPath
+        <span class="apidocSignatureSpan">(cacheDir, taskName, targetName, filePath)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getHashPath = function (cacheDir, taskName, targetName, filePath) {
+  var hashedName = crypto.createHash(&#x27;md5&#x27;).update(filePath).digest(&#x27;hex&#x27;);
+  return path.join(cacheDir, taskName, targetName, &#x27;hashes&#x27;, hashedName);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.util.getStampPath" id="apidoc.element.grunt-newer.util.getStampPath">
+        function <span class="apidocSignatureSpan">grunt-newer.util.</span>getStampPath
+        <span class="apidocSignatureSpan">(cacheDir, taskName, targetName)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getStampPath = function (cacheDir, taskName, targetName) {
+  return path.join(cacheDir, taskName, targetName, &#x27;timestamp&#x27;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+} else if (Array.isArray(config.files) &#x26;&#x26;
+    typeof config.files[0] === &#x27;string&#x27;) {
+  config.src = config.files;
+  delete config.files;
+  srcFiles = false;
+}
+
+var stamp = util.<span class="apidocCodeKeywordSpan">getStampPath</span>(options.cache, taskName, targetName);
+var previous;
+try {
+  previous = fs.statSync(stamp).mtime;
+} catch (err) {
+  // task has never succeeded before
+  previous = new Date(0);
+}
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
