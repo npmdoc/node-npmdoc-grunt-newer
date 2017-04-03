@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"grunt-newer",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "grunt-newer",
+    "description": "api documentation for [grunt-newer (v1.2.0)](https://github.com/tschaub/grunt-newer) [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-newer.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-newer) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-newer.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-newer)",
     "devDependencies": {
-        "grunt-newer": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "grunt-newer": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-grunt-newer",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-grunt-newer",
+    "keywords": [
+        "documentation",
+        "grunt-newer"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_grunt_newer.js",
+    "name": "npmdoc-grunt-newer",
+    "nameAlias": "npmdoc_grunt_newer",
+    "nameOriginal": "npmdoc-grunt-newer",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-grunt-newer.git"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
     "version": "0.0.1"
 }
