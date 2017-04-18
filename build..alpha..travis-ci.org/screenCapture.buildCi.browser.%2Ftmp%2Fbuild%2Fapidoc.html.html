@@ -47,7 +47,7 @@
 }
 </style>
 <h1>api documentation for
-    <a href="https://github.com/tschaub/grunt-newer">grunt-newer (v1.2.0)</a>
+    <a href="https://github.com/tschaub/grunt-newer">grunt-newer (v1.3.0)</a>
 </h1>
 <h4>Run Grunt tasks with only those source files modified since the last successful run.</h4>
 <div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
@@ -56,7 +56,60 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.grunt-newer">
+            function <span class="apidocSignatureSpan"></span>grunt-newer
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.newer">
+            function <span class="apidocSignatureSpan">grunt-newer.</span>newer
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.toString">
+            function <span class="apidocSignatureSpan">grunt-newer.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">grunt-newer.</span>util</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-newer.newer">module grunt-newer.newer</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.newer.newer">
+            function <span class="apidocSignatureSpan">grunt-newer.</span>newer
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-newer.toString">module grunt-newer.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-newer.toString.toString">
+            function <span class="apidocSignatureSpan">grunt-newer.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
 
         </li>
 
@@ -152,6 +205,252 @@
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.grunt-newer" id="apidoc.module.grunt-newer">module grunt-newer</a></h1>
 
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.grunt-newer" id="apidoc.element.grunt-newer.grunt-newer">
+        function <span class="apidocSignatureSpan"></span>grunt-newer
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-newer = function (grunt) {
+
+  var gruntfileSrc = 'gruntfile.js';
+  var tasksSrc = ['tasks/**/*.js', 'lib/**/*.js'];
+  var testSrc = 'test/**/*.spec.js';
+  var fixturesJs = 'test/integration/fixtures/**/*.js';
+  var fixturesAll = 'test/integration/fixtures/**/*';
+
+  grunt.initConfig({
+
+    cafemocha: {
+      options: {
+        reporter: 'spec'
+      },
+      all: {
+        src: testSrc
+      }
+    },
+
+    jshint: {
+      options: {
+        jshintrc: true
+      },
+      gruntfile: {
+        src: gruntfileSrc
+      },
+      tasks: {
+        src: tasksSrc
+      },
+      tests: {
+        src: testSrc
+      },
+      fixturesJs: {
+        src: fixturesJs
+      }
+    },
+
+    watch: {
+      tasks: {
+        files: tasksSrc,
+        tasks: ['cafemocha']
+      },
+      tests: {
+        files: testSrc,
+        tasks: ['newer:cafemocha']
+      },
+      fixturesAll: {
+        files: fixturesAll,
+        tasks: ['cafemocha']
+      },
+      allJs: {
+        files: [gruntfileSrc, tasksSrc, testSrc, fixturesJs],
+        tasks: ['newer:jshint']
+      }
+    }
+
+  });
+
+  grunt.loadTasks('tasks');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-cafe-mocha');
+
+  grunt.registerTask('test', ['newer:jshint', 'cafemocha']);
+
+  grunt.registerTask('default', 'test');
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.newer" id="apidoc.element.grunt-newer.newer">
+        function <span class="apidocSignatureSpan">grunt-newer.</span>newer
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">newer = function (grunt) {
+
+  grunt.registerTask(
+      'newer', 'Run a task with only those source files that have been ' +
+      'modified since the last successful run.', createTask(grunt));
+
+  var deprecated = 'DEPRECATED TASK.  Use the "newer" task instead';
+  grunt.registerTask(
+      'any-newer', deprecated, function() {
+        grunt.log.warn(deprecated);
+        var args = Array.prototype.join.call(arguments, ':');
+        grunt.task.run(['newer:' + args]);
+      });
+
+  var internal = 'Internal task.';
+  grunt.registerTask(
+      'newer-postrun', internal, function(taskName, targetName, id, dir) {
+
+        // if dir includes a ':', grunt will split it among multiple args
+        dir = Array.prototype.slice.call(arguments, 3).join(':');
+        grunt.file.write(util.getStampPath(dir, taskName, targetName),
+            String(Date.now()));
+
+        // reconfigure task with original config
+        grunt.config.set([taskName, targetName], pluckConfig(id));
+
+      });
+
+  var clean = 'Remove cached timestamps.';
+  grunt.registerTask(
+      'newer-clean', clean, function(taskName, targetName) {
+        var done = this.async();
+
+<span class="apidocCodeCommentSpan">        /**
+         * This intentionally only works with the default cache dir.  If a
+         * custom cache dir is provided, it is up to the user to keep it clean.
+         */
+</span>        var cacheDir = path.join(__dirname, '..', '.cache');
+        if (taskName &amp;&amp; targetName) {
+          cacheDir = util.getStampPath(cacheDir, taskName, targetName);
+        } else if (taskName) {
+          cacheDir = path.join(cacheDir, taskName);
+        }
+        if (grunt.file.exists(cacheDir)) {
+          grunt.log.writeln('Cleaning ' + cacheDir);
+          rimraf(cacheDir, done);
+        } else {
+          done();
+        }
+      });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.toString" id="apidoc.element.grunt-newer.toString">
+        function <span class="apidocSignatureSpan">grunt-newer.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-newer.newer" id="apidoc.module.grunt-newer.newer">module grunt-newer.newer</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.newer.newer" id="apidoc.element.grunt-newer.newer.newer">
+        function <span class="apidocSignatureSpan">grunt-newer.</span>newer
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">newer = function (grunt) {
+
+  grunt.registerTask(
+      'newer', 'Run a task with only those source files that have been ' +
+      'modified since the last successful run.', createTask(grunt));
+
+  var deprecated = 'DEPRECATED TASK.  Use the "newer" task instead';
+  grunt.registerTask(
+      'any-newer', deprecated, function() {
+        grunt.log.warn(deprecated);
+        var args = Array.prototype.join.call(arguments, ':');
+        grunt.task.run(['newer:' + args]);
+      });
+
+  var internal = 'Internal task.';
+  grunt.registerTask(
+      'newer-postrun', internal, function(taskName, targetName, id, dir) {
+
+        // if dir includes a ':', grunt will split it among multiple args
+        dir = Array.prototype.slice.call(arguments, 3).join(':');
+        grunt.file.write(util.getStampPath(dir, taskName, targetName),
+            String(Date.now()));
+
+        // reconfigure task with original config
+        grunt.config.set([taskName, targetName], pluckConfig(id));
+
+      });
+
+  var clean = 'Remove cached timestamps.';
+  grunt.registerTask(
+      'newer-clean', clean, function(taskName, targetName) {
+        var done = this.async();
+
+<span class="apidocCodeCommentSpan">        /**
+         * This intentionally only works with the default cache dir.  If a
+         * custom cache dir is provided, it is up to the user to keep it clean.
+         */
+</span>        var cacheDir = path.join(__dirname, '..', '.cache');
+        if (taskName &amp;&amp; targetName) {
+          cacheDir = util.getStampPath(cacheDir, taskName, targetName);
+        } else if (taskName) {
+          cacheDir = path.join(cacheDir, taskName);
+        }
+        if (grunt.file.exists(cacheDir)) {
+          grunt.log.writeln('Cleaning ' + cacheDir);
+          rimraf(cacheDir, done);
+        } else {
+          done();
+        }
+      });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-newer.toString" id="apidoc.module.grunt-newer.toString">module grunt-newer.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-newer.toString.toString" id="apidoc.element.grunt-newer.toString.toString">
+        function <span class="apidocSignatureSpan">grunt-newer.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
 
 
 </div>
