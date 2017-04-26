@@ -1,6 +1,6 @@
 # npmdoc-grunt-newer
 
-#### api documentation for  [grunt-newer (v1.3.0)](https://github.com/tschaub/grunt-newer)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-newer.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-newer) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-newer.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-newer)
+#### basic api documentation for  [grunt-newer (v1.3.0)](https://github.com/tschaub/grunt-newer)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-newer.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-newer) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-newer.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-newer)
 
 #### Run Grunt tasks with only those source files modified since the last successful run.
 
@@ -81,7 +81,8 @@
         "start": "grunt test watch",
         "test": "grunt test"
     },
-    "version": "1.3.0"
+    "version": "1.3.0",
+    "bin": {}
 }
 ```
 
